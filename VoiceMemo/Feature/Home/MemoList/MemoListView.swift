@@ -10,6 +10,7 @@ import SwiftUI
 struct MemoListView: View {
     @EnvironmentObject private var pathModel: PathModel
     @EnvironmentObject private var memoListViewModel: MemoListViewModel
+    @EnvironmentObject private var homeViewModel: HomeViewModel
     
     var body: some View {
         ZStack {
@@ -42,7 +43,7 @@ struct MemoListView: View {
             WriteMemoBtnView()
                 .padding(.trailing, 20)
                 .padding(.bottom, 50)
-
+            
         }
         .alert("메모 \(memoListViewModel.removeMemoCount)개 삭제하시겠습니까?",
                isPresented: $memoListViewModel.isDisplayRemoveMemoAlert) {
@@ -53,13 +54,16 @@ struct MemoListView: View {
                 
             }
         }
+        .onChange(of: memoListViewModel.memos) { memos in
+            homeViewModel.setMemosCount(memos.count)
+        }
     }
 }
 
 // MARK: - 타이틀 뷰
 private struct TitleView: View {
     @EnvironmentObject private var memoListViewModel: MemoListViewModel
-
+    
     fileprivate var body: some View {
         HStack {
             if memoListViewModel.memos.isEmpty {
@@ -86,7 +90,7 @@ private struct AnnouncementView: View {
             Text("\"퇴근 9시간 전 메모\"")
             Text("\"개발 끝낸 후 퇴근하기!\"")
             Text("\"밀린 알고리즘 공부하기!\"")
-
+            
             Spacer()
         }
         .font(.system(size: 16))
@@ -97,7 +101,7 @@ private struct AnnouncementView: View {
 // MARK: - 메모 리스트 컨텐츠 뷰
 private struct MemoListContentView: View {
     @EnvironmentObject private var memoListViewModel: MemoListViewModel
-
+    
     fileprivate var body: some View {
         VStack {
             HStack {
@@ -202,5 +206,6 @@ private struct WriteMemoBtnView: View {
     MemoListView()
         .environmentObject(PathModel())
         .environmentObject(MemoListViewModel())
+        .environmentObject(HomeViewModel())
 }
 

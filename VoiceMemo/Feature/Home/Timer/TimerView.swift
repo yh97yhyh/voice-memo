@@ -76,6 +76,8 @@ private struct TimePickerView: View {
                 .frame(height: 1)
             
             HStack {
+                Spacer()
+                
                 Picker("Hour", selection: $timerViewModel.time.hours) {
                     ForEach(0..<24) { hour in
                         Text("\(hour)시")
@@ -93,6 +95,8 @@ private struct TimePickerView: View {
                         Text("\(second)초")
                     }
                 }
+                
+                Spacer()
             }
             .labelsHidden()
             .pickerStyle(.wheel)

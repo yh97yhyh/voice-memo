@@ -10,6 +10,7 @@ import SwiftUI
 struct TodoListView: View {
     @EnvironmentObject private var pathModel: PathModel
     @EnvironmentObject private var todoListViewModel: TodoListViewModel
+    @EnvironmentObject private var homeViewModel: HomeViewModel
     
     var body: some View {
         ZStack {
@@ -37,7 +38,7 @@ struct TodoListView: View {
                         .padding(.top, 20)
                 }
             }
-         
+            
             WriteTodoBtnView()
                 .padding(.trailing, 20)
                 .padding(.bottom, 50)
@@ -51,13 +52,17 @@ struct TodoListView: View {
                 
             }
         }
+        .onChange(of: todoListViewModel.todos) { todos in
+            homeViewModel.setTodosCount(todos.count)
+        }
+        
     }
 }
 
 // MARK: - TOdoList 타이틀 뷰
 private struct TitleView: View {
     @EnvironmentObject private var todoListViewModel: TodoListViewModel
-
+    
     fileprivate var body: some View {
         HStack {
             if todoListViewModel.todos.isEmpty {
@@ -95,7 +100,7 @@ private struct AnnouncementView: View {
 // MARK: - TodoList 컨텐츠 뷰
 private struct TodoListContentView: View {
     @EnvironmentObject private var todoListViewModel: TodoListViewModel
-
+    
     fileprivate var body: some View {
         VStack {
             HStack {
@@ -201,4 +206,5 @@ private struct WriteTodoBtnView: View {
     TodoListView()
         .environmentObject(PathModel())
         .environmentObject(TodoListViewModel())
+        .environmentObject(HomeViewModel())
 }

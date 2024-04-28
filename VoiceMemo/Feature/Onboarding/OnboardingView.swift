@@ -16,19 +16,21 @@ struct OnboardingView: View {
     var body: some View {
 
         NavigationStack(path: $pathModel.paths) {
-//            OnboardingContentView(onboardingViewModel: onboardingViewModel)
+            OnboardingContentView(onboardingViewModel: onboardingViewModel)
 //            TodoListView()
 //                .environmentObject(todoListViewModel)
 //            MemoListView()
 //                .environmentObject(memoListViewModel)
 //            VoicerecorderView()
 //            TimerView()
-            SettingView()
+//            SettingView()
                 .navigationDestination(for: PathType.self, destination: { pathType in
                     switch pathType {
                     case .homeView:
                         HomeView()
                             .navigationBarBackButtonHidden()
+                            .environmentObject(todoListViewModel)
+                            .environmentObject(memoListViewModel)
                     case .todoView:
                         TodoView()
                             .navigationBarBackButtonHidden()
