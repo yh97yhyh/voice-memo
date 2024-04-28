@@ -83,18 +83,28 @@ private struct TimePickerView: View {
                         Text("\(hour)시")
                     }
                 }
+                .frame(width: 100)
+                .clipped()
+                
+                Spacer()
                 
                 Picker("Minute", selection: $timerViewModel.time.minutes) {
                     ForEach(0..<60) { minute in
                         Text("\(minute)분")
                     }
                 }
+                .frame(width: 100)
+                .clipped()
+                
+                Spacer()
                 
                 Picker("Second", selection: $timerViewModel.time.seconds) {
                     ForEach(0..<60) { second in
                         Text("\(second)초")
                     }
                 }
+                .frame(width: 100)
+                .clipped()
                 
                 Spacer()
             }
